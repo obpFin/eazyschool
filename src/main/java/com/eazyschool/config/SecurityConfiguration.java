@@ -18,7 +18,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().and()
+            .csrf()
+                .ignoringAntMatchers("/saveMsg")
+                .ignoringAntMatchers("/h2-console/**").and()
             .authorizeHttpRequests(
                 (authz) -> {
     /*              try {
@@ -36,10 +38,13 @@ public class SecurityConfiguration {
                             .mvcMatchers("/courses").permitAll()
                             .mvcMatchers("/about").permitAll()
                             .mvcMatchers("/login").permitAll()
+                            .antMatchers("/h2-console/**").permitAll()
                             .and().formLogin().loginPage("/login")
                             .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                             .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true ).permitAll()
                             .and().httpBasic();
+
+                        http.headers().frameOptions().disable();    // Not safe for production
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
