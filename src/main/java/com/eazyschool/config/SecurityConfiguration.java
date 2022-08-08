@@ -65,7 +65,7 @@ public class SecurityConfiguration {
         UserDetails adminUser = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("password")
-                .roles("USER", "ADMIN")
+                .roles("ADMIN")
                 .build();
         users.add(user);
         users.add(adminUser);
