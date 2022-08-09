@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                     try {
                         authz
                             .mvcMatchers("/dashboard").authenticated()
+                            .mvcMatchers("/displayMessages").hasRole("ADMIN")
                             .mvcMatchers("/home").permitAll()
                             .mvcMatchers("/holidays/**").permitAll()
                             .mvcMatchers("/contact").permitAll()
