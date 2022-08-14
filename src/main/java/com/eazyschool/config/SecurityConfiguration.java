@@ -49,7 +49,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
+/*    @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         ArrayList<UserDetails> users = new ArrayList<>();
         UserDetails user = User.withDefaultPasswordEncoder()
@@ -65,6 +65,6 @@ public class SecurityConfiguration {
         users.add(user);
         users.add(adminUser);
         return new InMemoryUserDetailsManager(users);
-    }
+    }*/
 
 }
