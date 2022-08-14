@@ -20,14 +20,10 @@ public class SecurityConfiguration {
         http
             .csrf()
                 .ignoringAntMatchers("/saveMsg")
+                .ignoringAntMatchers("/public/**")
                 .and()
             .authorizeHttpRequests(
                 (authz) -> {
-    /*              try {
-                      authz.anyRequest().permitAll().and().httpBasic().and().formLogin();
-                  } catch (Exception e) {
-                      throw new RuntimeException(e);
-                  }*/
                     try {
                         authz
                             .mvcMatchers("/dashboard").authenticated()
@@ -39,6 +35,7 @@ public class SecurityConfiguration {
                             .mvcMatchers("/courses").permitAll()
                             .mvcMatchers("/about").permitAll()
                             .mvcMatchers("/login").permitAll()
+                            .mvcMatchers("/public/**").permitAll()
                             .and().formLogin().loginPage("/login")
                             .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                             .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true ).permitAll()
