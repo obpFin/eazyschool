@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                             .mvcMatchers("/about").permitAll()
                             .mvcMatchers("/login").permitAll()
                             .mvcMatchers("/public/**").permitAll()
+                            .mvcMatchers("/admin/**").hasRole("ADMIN")
                             .and().formLogin().loginPage("/login")
                             .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                             .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true ).permitAll()
