@@ -23,11 +23,13 @@ public class SecurityConfiguration {
             .csrf()
                 .ignoringAntMatchers("/saveMsg")
                 .ignoringAntMatchers("/public/**")
+                .ignoringAntMatchers("/api/**")
                 .and()
             .authorizeHttpRequests(
                 (authz) -> {
                     try {
                         authz
+                            .mvcMatchers("/api/**").authenticated()
                             .mvcMatchers("/dashboard").authenticated()
                             .mvcMatchers("/displayProfile").authenticated()
                             .mvcMatchers("/updateProfile").authenticated()
