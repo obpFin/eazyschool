@@ -1,19 +1,20 @@
 package com.eazyschool.rest;
 
 import com.eazyschool.model.Contact;
+import com.eazyschool.model.Response;
 import com.eazyschool.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping(path = "/api/contact")
 public class ContactRestController {
 
@@ -21,8 +22,32 @@ public class ContactRestController {
     ContactRepository contactRepository;
 
     @GetMapping("/getMessagesByStatus")
-    @ResponseBody
     public List<Contact> getMessagesByStatus(@RequestParam(name = "status") String status) {
         return contactRepository.findByStatus(status);
+    }
+
+    @GetMapping("/getAllMsgsByStatus")
+    public List<Contact> getAllMsgsByStatus(@RequestBody Contact contact) {
+        if (contact != null && contact.getStatus() != null) {
+            return contactRepository.findByStatus(contact.getStatus());
+        } else {
+            return List.of();
+        }
+    }
+
+
+    @PostMapping("/saveMsg")
+    // @ResponseBody
+    public ResponseEntity<Response> saveMsg(@RequestHeader("invocationFrom") String invocationFrom,
+                                            @Valid @RequestBody Contact contact){
+        log.info(String.format("Header invocationFrom = %s", invocationFrom));
+        contactRepository.save(contact);
+        Response response = new Response();
+        response.setStatusCode("200");
+        response.setStatusMsg("Message saved successfully");
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .header("isMsgSaved", "true")
+                .body(response);
     }
 }
