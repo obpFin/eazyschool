@@ -5,13 +5,16 @@ import com.eazyschool.model.Response;
 import com.eazyschool.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -39,7 +42,7 @@ public class ContactRestController {
     @PostMapping("/saveMsg")
     // @ResponseBody
     public ResponseEntity<Response> saveMsg(@RequestHeader("invocationFrom") String invocationFrom,
-                                            @Valid @RequestBody Contact contact){
+                                            @Valid @RequestBody Contact contact){   // Should use RequestEntity instead
         log.info(String.format("Header invocationFrom = %s", invocationFrom));
         contactRepository.save(contact);
         Response response = new Response();
@@ -48,6 +51,23 @@ public class ContactRestController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header("isMsgSaved", "true")
+                .body(response);
+    }
+
+    @DeleteMapping("/deleteMsg")
+    public ResponseEntity<Response> deleteMsg(RequestEntity<Contact> requestEntity){
+        HttpHeaders headers = requestEntity.getHeaders();
+        headers.forEach((key, value) -> {
+            log.info(String.format(
+                    "Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
+        });
+        Contact contact = requestEntity.getBody();
+        contactRepository.deleteById(contact.getContactId());
+        Response response = new Response();
+        response.setStatusCode("200");
+        response.setStatusMsg("Message successfully deleted");
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .body(response);
     }
 }
