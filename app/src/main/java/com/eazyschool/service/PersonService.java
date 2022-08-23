@@ -1,13 +1,10 @@
 package com.eazyschool.service;
 
 import com.eazyschool.constants.EazyschoolConstants;
-import com.eazyschool.model.Contact;
 import com.eazyschool.model.Person;
 import com.eazyschool.model.Roles;
-import com.eazyschool.repository.ContactRepository;
 import com.eazyschool.repository.PersonRepository;
 import com.eazyschool.repository.RolesRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

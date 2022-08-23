@@ -2,7 +2,6 @@ package com.eazyschool.model;
 
 import com.eazyschool.annotation.FieldsValueMatch;
 import com.eazyschool.annotation.PasswordValidator;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
