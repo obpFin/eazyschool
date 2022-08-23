@@ -27,12 +27,12 @@ public class ContactController {
     @Autowired
     WebClient webClient;
 
-    @GetMapping("/getMessages")
+    @GetMapping("/getMessages")     // FeignClient
     public List<Contact> getMessages(@RequestParam("status") String status) {
         return contactProxy.getMessagesByStatus(status);
     }
 
-    @PostMapping("/saveMsg")
+    @PostMapping("/saveMsg")    // RestTemplate -deprecated
     public ResponseEntity<Response> saveMsg(@RequestBody Contact contact){
         String uri = "http://localhost:8080/api/contact/saveMsg";
         HttpHeaders headers = new HttpHeaders();
@@ -43,7 +43,7 @@ public class ContactController {
         return responseEntity;
     }
 
-    @PostMapping("/saveMessage")
+    @PostMapping("/saveMessage")    // WebClient
     public Mono<Response> saveMessage(@RequestBody Contact contact){
         String uri = "http://localhost:8080/api/contact/saveMsg";
         return webClient.post().uri(uri)

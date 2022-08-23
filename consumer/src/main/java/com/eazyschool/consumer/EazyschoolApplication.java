@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients(basePackages = "com.eazyschool.consumer")
+@EnableFeignClients(basePackages = "com.eazyschool.consumer.proxy")
 public class EazyschoolApplication {
 
 	public static void main(String[] args) {
