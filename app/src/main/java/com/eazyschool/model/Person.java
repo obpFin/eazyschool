@@ -2,6 +2,7 @@ package com.eazyschool.model;
 
 import com.eazyschool.annotation.FieldsValueMatch;
 import com.eazyschool.annotation.PasswordValidator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -46,21 +47,25 @@ public class Person extends BaseEntity{
 
     @NotBlank(message="Email must not be blank")
     @Email(message = "Please provide a valid email address" )
+    @JsonIgnore
     private String email;
 
     @NotBlank(message="Confirm Email must not be blank")
     @Email(message = "Please provide a valid confirm email address" )
     @Transient
+    @JsonIgnore
     private String confirmEmail;
 
     @NotBlank(message="Password must not be blank")
     @Size(min=5, message="Password must be at least 5 characters long")
     @PasswordValidator
+    @JsonIgnore
     private String pwd;
 
     @NotBlank(message="Confirm Password must not be blank")
     @Size(min=5, message="Confirm Password must be at least 5 characters long")
     @Transient
+    @JsonIgnore
     private String confirmPwd;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST, targetEntity = Roles.class)

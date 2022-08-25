@@ -24,12 +24,14 @@ public class SecurityConfiguration {
                 .ignoringAntMatchers("/saveMsg")
                 .ignoringAntMatchers("/public/**")
                 .ignoringAntMatchers("/api/**")
+                .ignoringAntMatchers("/data-api/**")
                 .and()
             .authorizeHttpRequests(
                 (authz) -> {
                     try {
                         authz
                             .mvcMatchers("/api/**").authenticated()
+                            .mvcMatchers("/data-api/**").authenticated()
                             .mvcMatchers("/dashboard").authenticated()
                             .mvcMatchers("/displayProfile").authenticated()
                             .mvcMatchers("/updateProfile").authenticated()

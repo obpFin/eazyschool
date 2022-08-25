@@ -41,7 +41,7 @@ public class ContactService {
         int pageSize = 5;
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-        Page<Contact> msgPage = contactRepository.findByStatus(EazyschoolConstants.OPEN, pageable);
+        Page<Contact> msgPage = contactRepository.findByStatusWithQuery(EazyschoolConstants.OPEN, pageable);
         return msgPage;
     }
 
