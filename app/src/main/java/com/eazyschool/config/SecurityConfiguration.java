@@ -25,6 +25,7 @@ public class SecurityConfiguration {
                 .ignoringAntMatchers("/public/**")
                 .ignoringAntMatchers("/api/**")
                 .ignoringAntMatchers("/data-api/**")
+                .ignoringAntMatchers("/eazyschool/actuator/**")
                 .and()
             .authorizeHttpRequests(
                 (authz) -> {
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
                             .mvcMatchers("/dashboard").authenticated()
                             .mvcMatchers("/displayProfile").authenticated()
                             .mvcMatchers("/updateProfile").authenticated()
+                            .mvcMatchers("/eazyschool/actuator/**").hasRole("ADMIN")
                             .mvcMatchers("/displayMessages").hasRole("ADMIN")
                             .mvcMatchers("/home").permitAll()
                             .mvcMatchers("/holidays/**").permitAll()
